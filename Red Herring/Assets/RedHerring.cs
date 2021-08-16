@@ -24,6 +24,8 @@ public class RedHerring : MonoBehaviour
     public GameObject modBG;
     public TextMesh cbText;
     private bool cbON;
+    
+    Coroutine Distraction = new Coroutine;
 
     private IDictionary<string, object> tpAPI;
 
@@ -174,7 +176,7 @@ public class RedHerring : MonoBehaviour
         switch (DistractionPicker)
         {
             case 0:
-                StartCoroutine(Swan());
+                Distraction = StartCoroutine(Swan());
                 break;
             case 1:
                 StartCoroutine(Door1Noise());
@@ -253,6 +255,7 @@ public class RedHerring : MonoBehaviour
                 CanPress = false;
             }
 			Started = false;
+			StopCoroutine(Distraction);
 			if (moduleSolved == true)
 			{
 				  TogglePress = false;
