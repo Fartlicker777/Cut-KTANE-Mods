@@ -6,6 +6,7 @@ Funny Numbers\
 Jukebox.WAV\
 Red Herring\
 The Overflow\
+Old Quick Arithmetic\
 \
 Not Uploaded:\
 Maze Running (I am uncertain of its fun "value.")\
