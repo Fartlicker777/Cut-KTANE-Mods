@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
+  m_Name: ModConfig
+  m_EditorClassIdentifier: 
+  id: The Clown
+  title: The Clown
+  author: me
+  description: 'Oh dear! Cirbungulus has not died yet! He beckons for blood, for revenge,
+    for his dignity that was striken away from him on that fateful day. And yet, he
+    is still the villain, while you are the hero of this story. The heineous stench
+    that eminates from Cirbungulus, is that of oil. His greasy hair, is the perfect
+    catalyst for pushing a good man to go to war. Even his face pisses off the calmest
+    man, for there is no tomfoolery in the world of Cirbungulus.
+
+
+    So what are you waiting for? Punch that bitch in the nose to end it once and for
+    all.
+
+
+    I''d suggest reading the manual.'
+  version: 
+  outputFolder: build
+  previewImage: {fileID: 2800000, guid: dbfa5145508803747ae12a23c4c7ded7, type: 3}
