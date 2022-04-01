@@ -7,6 +7,7 @@ Jukebox.WAV\
 Red Herring\
 The Overflow\
 Old Quick Arithmetic\
+The Clown (April Fool's mod)\
 \
 Not Uploaded:\
 Maze Running (I am uncertain of its fun "value.")\
