@@ -17,7 +17,7 @@ public class MazeRunning : MonoBehaviour {
    int Moves = 0;
    int PreviousAmountOfMoves = 0;
    int Goal = 12;
-   int[] StartingPosition = { 0, 1, 2, 3, 4, 9, 14, 19, 24, 23, 22, 21, 20, 15, 10, 5, 6, 7, 8, 13, 18, 17, 16, 11, 12};
+   int[] StartingPosition = { 0, 1, 2, 3, 4, 9, 14, 19, 24, 23, 22, 21, 20, 15, 10, 5, 6, 7, 8, 13, 18, 17, 16, 11, 12 };
 
    string HorizontalShift = String.Empty;
    string VerticalShift = String.Empty;
@@ -42,16 +42,16 @@ public class MazeRunning : MonoBehaviour {
    };
    string[] TempMaze = new string[25];
 
-   void Awake() {
+   void Awake () {
       moduleId = moduleIdCounter++;
 
       foreach (KMSelectable Button in Buttons) {
          Button.OnInteract += delegate () { ButtonPress(Button); return false; };
       }
-      WaitButton.OnInteract += delegate () {WaitingPress(); return false; };
+      WaitButton.OnInteract += delegate () { WaitingPress(); return false; };
    }
 
-   void Start() {
+   void Start () {
       //WhereYouAre = (Bomb.GetSerialNumberNumbers().Last() == 0 ? 20 : (Bomb.GetSerialNumberNumbers().Last() - 1) * 10) + (Bomb.GetSerialNumberNumbers().First() == 0 ? 9 : Bomb.GetSerialNumberNumbers().First() - 1);
       WhereYouAre = StartingPosition[Bomb.GetSerialNumberNumbers().ToArray().Sum() % 25];
       for (int i = 0; i < 25; i++) {
@@ -79,7 +79,7 @@ public class MazeRunning : MonoBehaviour {
       VerticalShift = Bomb.GetSerialNumber().Any(x => "AEIOU".Contains(x)) ? "DOWN" : "UP";
    }
 
-   void ButtonPress(KMSelectable Button) {
+   void ButtonPress (KMSelectable Button) {
       Button.AddInteractionPunch();
       Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Button.transform);
       for (int i = 0; i < 4; i++) {
@@ -158,7 +158,7 @@ public class MazeRunning : MonoBehaviour {
       }
    }
 
-   void MazeShifter() {
+   void MazeShifter () {
       switch (Moves % 2) {
          case 0:
             for (int i = 0; i < 25; i++) {
@@ -189,24 +189,6 @@ public class MazeRunning : MonoBehaviour {
                   }
                   else if (TempMaze[(i + 5) % 25].Any(x => "U".Contains(x))) {
                      TempMaze[i] += "D";
-                  }
-               }
-            }
-            if (WhereYouAre / 5 % 2 == 1) {
-               if (HorizontalShift == "LEFT") {
-                  if (WhereYouAre % 5 == 0) {
-                     WhereYouAre += 4;
-                  }
-                  else {
-                     WhereYouAre--;
-                  }
-               }
-               else {
-                  if (WhereYouAre % 5 == 4) {
-                     WhereYouAre -= 4;
-                  }
-                  else {
-                     WhereYouAre++;
                   }
                }
             }
@@ -272,8 +254,8 @@ public class MazeRunning : MonoBehaviour {
                   }
                }
             }
-            if (WhereYouAre % 2 == 0) {
-               if (VerticalShift == "UP") {
+            if (WhereYouAre % 5 % 2 == 0) {
+               if (VerticalShift == "DOWN") {
                   WhereYouAre += 5;
                   WhereYouAre %= 25;
                }
@@ -285,7 +267,7 @@ public class MazeRunning : MonoBehaviour {
                }
             }
             if ((Goal % 5) % 2 == 0) {
-               if (VerticalShift == "UP") {
+               if (VerticalShift == "DOWN") {
                   Goal += 5;
                   Goal %= 25;
                }
@@ -329,9 +311,9 @@ public class MazeRunning : MonoBehaviour {
    private readonly string TwitchHelpMessage = @"Use !{0} U/L/D/R/Up/Left/Down/Right/Submit/Reset to press that button. Chain with commas.";
 #pragma warning restore 414
 
-   IEnumerator ProcessTwitchCommand(string Command) {
+   IEnumerator ProcessTwitchCommand (string Command) {
       string[] Parameters = Command.Trim().ToUpper().Split(',');
-      string[] AcceptableCommands = { "U", "D", "L", "R", "LEFT", "RIGHT", "UP", "DOWN", "SUBMIT", "RESET"};
+      string[] AcceptableCommands = { "U", "D", "L", "R", "LEFT", "RIGHT", "UP", "DOWN", "SUBMIT", "RESET" };
       int Wrong = 0;
       yield return null;
       for (int i = 0; i < Parameters.Length; i++) {
@@ -350,27 +332,32 @@ public class MazeRunning : MonoBehaviour {
       }
       for (int i = 0; i < Parameters.Length; i++) {
          switch (Parameters[i]) {
-            case "U": case "UP":
+            case "U":
+            case "UP":
                Buttons[2].OnInteract();
                break;
-            case "D": case "DOWN":
+            case "D":
+            case "DOWN":
                Buttons[0].OnInteract();
                break;
-            case "L": case "LEFT":
+            case "L":
+            case "LEFT":
                Buttons[1].OnInteract();
                break;
-            case "R": case "RIGHT":
+            case "R":
+            case "RIGHT":
                Buttons[3].OnInteract();
                break;
-            case "SUBMIT": case "RESET":
+            case "SUBMIT":
+            case "RESET":
                WaitButton.OnInteract();
                break;
          }
-         yield return new WaitForSecondsRealtime(1f);
+         yield return new WaitForSecondsRealtime(.1f);
       }
    }
 
-   IEnumerator TwitchHandleForcedSolve() {
+   IEnumerator TwitchHandleForcedSolve () {
       yield return null;
    }
 }
