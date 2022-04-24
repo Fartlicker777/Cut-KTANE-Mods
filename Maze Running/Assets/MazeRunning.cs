@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using KModkit;
 
@@ -15,9 +14,8 @@ public class MazeRunning : MonoBehaviour {
 
    int WhereYouAre = 0;
    int Moves = 0;
-   int PreviousAmountOfMoves = 0;
    int Goal = 12;
-   int[] StartingPosition = { 0, 1, 2, 3, 4, 9, 14, 19, 24, 23, 22, 21, 20, 15, 10, 5, 6, 7, 8, 13, 18, 17, 16, 11, 12 };
+   readonly int[] StartingPosition = { 0, 1, 2, 3, 4, 9, 14, 19, 24, 23, 22, 21, 20, 15, 10, 5, 6, 7, 8, 13, 18, 17, 16, 11, 12 };
 
    string HorizontalShift = String.Empty;
    string VerticalShift = String.Empty;
@@ -54,24 +52,8 @@ public class MazeRunning : MonoBehaviour {
    void Start () {
       //WhereYouAre = (Bomb.GetSerialNumberNumbers().Last() == 0 ? 20 : (Bomb.GetSerialNumberNumbers().Last() - 1) * 10) + (Bomb.GetSerialNumberNumbers().First() == 0 ? 9 : Bomb.GetSerialNumberNumbers().First() - 1);
       WhereYouAre = StartingPosition[Bomb.GetSerialNumberNumbers().ToArray().Sum() % 25];
-      for (int i = 0; i < 25; i++) {
-         TempMaze[i] = "";
-      }
-      string Log = "";
-      for (int i = 0; i < 25; i++) {
-         Log += TheMaze[i] == "" ? "(B)" : TheMaze[i];
-         if (i == WhereYouAre) {
-            Log += "*";
-         }
-         if (i == Goal) {
-            Log += "+";
-         }
-         Log += " ";
-         if (i % 5 == 4) {
-            Log += "\n";
-         }
-      }
-      Debug.Log(Log);
+      //TheMaze[WhereYouAre] += "*";
+      LogMaze();
       for (int i = 0; i < 25; i++) {
          TempMaze[i] = "";
       }
@@ -143,10 +125,12 @@ public class MazeRunning : MonoBehaviour {
       Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonPress, WaitButton.transform);
       if (WhereYouAre == Goal) {
          GetComponent<KMBombModule>().HandlePass();
+         moduleSolved = true;
          return;
       }
       else if (TheMaze[WhereYouAre].Any(x => "U".Contains(x)) && TheMaze[WhereYouAre].Any(x => "D".Contains(x)) && TheMaze[WhereYouAre].Any(x => "L".Contains(x)) && TheMaze[WhereYouAre].Any(x => "R".Contains(x))) {
          Moves++;
+         Debug.LogFormat("[Maze Running #{0}] You got stuck, passing a turn...", moduleId);
          MazeShifter();
       }
       else {
@@ -154,6 +138,7 @@ public class MazeRunning : MonoBehaviour {
          for (int i = 0; i < 25; i++) {
             TheMaze[i] = InitialMaze[i];
          }
+         Debug.LogFormat("[Maze Running #{0}] The maze has been reset.", moduleId);
          WhereYouAre = StartingPosition[Bomb.GetSerialNumberNumbers().ToArray().Sum() % 25];
       }
    }
@@ -287,24 +272,42 @@ public class MazeRunning : MonoBehaviour {
             }
             break;
       }
-      string Log = "";
+      LogMaze();
       for (int i = 0; i < 25; i++) {
-         Log += TheMaze[i] == "" ? "(B)" : TheMaze[i];
+         TempMaze[i] = "";
+      }
+   }
+
+   void LogMaze () {
+      Debug.LogFormat("[Maze Running #{0}] After move {1}, the maze is:", moduleId, Moves);
+      string Log = "[Maze Running #{0}] ";
+      for (int i = 0; i < 25; i++) {
+         Log = MakeLog(Log, "U", i);
+         Log = MakeLog(Log, "L", i);
+         Log = MakeLog(Log, "D", i);
+         Log = MakeLog(Log, "R", i);
          if (i == WhereYouAre) {
             Log += "*";
+         }
+         else {
+            Log += ".";
          }
          if (i == Goal) {
             Log += "+";
          }
+         else {
+            Log += ".";
+         }
          Log += " ";
-         if (i % 5 == 4) {
-            Log += "\n";
+         if (i % 5 == 4 && i != 24) {
+            Log += "\n[Maze Running #{0}] ";
          }
       }
-      Debug.Log(Log);
-      for (int i = 0; i < 25; i++) {
-         TempMaze[i] = "";
-      }
+      Debug.LogFormat(Log, moduleId);
+   }
+
+   String MakeLog (String init, String add, int idx) {
+      return init + (TheMaze[idx].Contains(add) ? add : ".");
    }
 
 #pragma warning disable 414
@@ -313,16 +316,16 @@ public class MazeRunning : MonoBehaviour {
 
    IEnumerator ProcessTwitchCommand (string Command) {
       string[] Parameters = Command.Trim().ToUpper().Split(',');
-      string[] AcceptableCommands = { "U", "D", "L", "R", "LEFT", "RIGHT", "UP", "DOWN", "SUBMIT", "RESET" };
+      string[] AcceptableCommands = { "U", "D", "L", "R", "LEFT", "RIGHT", "UP", "DOWN", "SUBMIT"};
       int Wrong = 0;
       yield return null;
       for (int i = 0; i < Parameters.Length; i++) {
          Parameters[i] = Parameters[i].Trim();
-         for (int j = 0; j < 10; j++) {
+         for (int j = 0; j < 9; j++) {
             if (Parameters[i] != AcceptableCommands[j]) {
                Wrong++;
             }
-            if (Wrong == 10) {
+            if (Wrong == 9) {
                yield return "sendtochaterror I don't understand!";
                Wrong = 0;
                yield break;
@@ -349,7 +352,6 @@ public class MazeRunning : MonoBehaviour {
                Buttons[3].OnInteract();
                break;
             case "SUBMIT":
-            case "RESET":
                WaitButton.OnInteract();
                break;
          }
@@ -358,6 +360,30 @@ public class MazeRunning : MonoBehaviour {
    }
 
    IEnumerator TwitchHandleForcedSolve () {
-      yield return null;
+      while (!moduleSolved) {
+         if (Goal == WhereYouAre || !TheMaze[WhereYouAre].Contains('.')) {
+            yield return ProcessTwitchCommand("SUBMIT");
+         }
+         else if (Goal / 5 < WhereYouAre / 5 && !TheMaze[WhereYouAre].Contains('U')) {
+            yield return ProcessTwitchCommand("U");
+         }
+         else if (Goal / 5 > WhereYouAre / 5 && !TheMaze[WhereYouAre].Contains('D')) {
+            yield return ProcessTwitchCommand("D");
+         }
+
+         else if (Goal % 5 < WhereYouAre % 5 && !TheMaze[WhereYouAre].Contains('L')) {
+            yield return ProcessTwitchCommand("L");
+         }
+         else if (Goal % 5 > WhereYouAre % 5 && !TheMaze[WhereYouAre].Contains('R')) {
+            yield return ProcessTwitchCommand("R");
+         }
+
+         List<string> Dir = new List<string>() { "U", "R", "D", "L"};
+         for (int i = 0; i < TheMaze[WhereYouAre].Length; i++) {
+            Dir.Remove(TheMaze[WhereYouAre][i].ToString());
+         }
+         Dir.Shuffle();
+         yield return ProcessTwitchCommand(Dir[0]);
+      }
    }
 }
