@@ -12,6 +12,7 @@ The Clown (April Fool's mod)\
 Not Uploaded:\
 Maze Running (I am uncertain of its fun "value.")\
 Speech Jammer (Can't get rid of cheesing the module without making it annoying.)\
+2D Maze (Wanted to add more quirks, but got bored and realized that the mod wasn't worth making anyways)\
 \
 Not Finished:\
 Childish Freewriting (Based off of the child minigame from Bomb Corp.)\
