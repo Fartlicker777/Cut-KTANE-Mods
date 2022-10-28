@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>2D Maze — Keep Talking and Nobody Explodes Module</title>
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/ktane-utils.js"></script>
+    <style>
+        table {
+            margin: 1em auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="page page-bg-01">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">2D Maze</span>
+            </div>
+            <div class="page-content">
+                <img src="img/Component/2D Maze.svg" class="diagram">
+                <h2>On the Subject of 2D Maze</h2>
+                <p class="flavour-text">Let's take this to a dimension.</p>
+                
+				<h3>YOU ARE VIEWING ENTRY "A" OF 2D MAZE</h3>
+				
+                <ul>
+					<li>The defuser will start in a random cell from the grid below, with the color of that cell displayed on the LED.</li>
+					<li>Pressing any four of the arrows should take the defuser one space in the corresponding direction.</li>
+					<li>However, it seems that the person who made this is a moron to the nth degree, and has messed up the wiring to a significant margin. Each arrow does not necessarily go in the direction it indicates.</li>
+					<li>Find out where the defuser is, and navigate him to the goal (this is the first number of the serial number for the column, and the last for the row.) Press the LED when you are at the goal.</li>
+				</ul>
+				
+				<table>
+					<tr>
+						<td></td>
+						<td>0</td>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+						<td>5</td>
+						<td>6</td>
+						<td>7</td>
+						<td>8</td>
+						<td>9</td>
+					</tr>
+					
+					<tr>
+						<td>0</td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+					</tr>
+					
+					<tr>
+						<td>1</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+					</tr>
+					
+					<tr>
+						<td>2</td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+					</tr>
+					
+					<tr>
+						<td>3</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+					</tr>
+					
+					<tr>
+						<td>4</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+					</tr>
+					
+					<tr>
+						<td>5</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+					</tr>
+					
+					<tr>
+						<td>6</td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+					</tr>
+					
+					<tr>
+						<td>7</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+					</tr>
+					
+					<tr>
+						<td>8</td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+					</tr>
+					
+					<tr>
+						<td>9</td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:white;"></td>
+						<td style="background-color:black;"></td>
+					</tr>
+				</table>
+            </div>
+            <div class="page-footer relative-footer">Page 1 of 1</div>
+        </div>
+    </div>
+</body>
+</html>

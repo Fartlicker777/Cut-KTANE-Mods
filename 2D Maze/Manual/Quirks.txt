@@ -1,0 +1,6 @@
+Quirk C: one row and column is removed
+Quirk D: Entire grid is flipped
+Quirk E: Every button press will rick roll you.
+Quirk F: The displayed quirk is incorrect.
+Quirk G: Sometimes you will be given an indeterminate color.
+Quirk H: Beat DOOM 2016
