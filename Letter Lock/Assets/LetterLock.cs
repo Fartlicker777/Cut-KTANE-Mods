@@ -13,6 +13,8 @@ public class LetterLock : MonoBehaviour {
    public KMAudio Audio;
 
    public VideoPlayer Background;
+   public VideoClip clip;
+   public MeshRenderer BackRend;
 
    static int ModuleIdCounter = 1;
    int ModuleId;
@@ -36,8 +38,14 @@ public class LetterLock : MonoBehaviour {
    }
 
    IEnumerator PlayAnim () {
-      yield return new WaitForSecondsRealtime(1f);
-      Background.clip = VideoLoader.clips[0];
+      if (!Application.isEditor)
+      {
+         yield return new WaitUntil(() => VideoLoader.clips != null);
+         Background.clip = VideoLoader.clips[0];
+      }
+      else
+         Background.clip = clip;
+      BackRend.material.color = Color.white;
       Background.Play();
    }
 
